@@ -44,18 +44,22 @@ def test_clean_data():
     assert cleaned_data == EXPECTED_CLEANED_DATA
 
 
+#   123,gate_in,2023-01-31T08:18:36.000Z
+
+
 def test_load_csv(tmp_path):
-    # Create a temporary CSV file
     csv_content = """user_id,event_type,event_time
-                     123,gate_in,2023-01-31T08:18:36.000Z
-                     456,GATE_OUT,2023-01-31T18:00:00.000Z
-                  """
-    test_file = tmp_path / "test.csv"
+455,GATE_OUT,2024-02-31T18:00:00.000Z
+123,gate_in,2023-01-31T08:18:36.000Z
+"""
+    
+    test_file = tmp_path / "testing.csv"
     test_file.write_text(csv_content)
 
     data = load_csv(test_file) 
+    print(data[0])
 
     assert len(data) == 2
-    assert data[0]["user_id"] == "123"
-    assert data[0]["event_type"] == "gate_in"
-    assert data[0]["event_time"] == "2023-01-31T08:18:36.000Z"
+    assert data[0]["user_id"] == "455"
+    assert data[0]["event_type"] == "GATE_OUT"
+    assert data[0]["event_time"] == "2024-02-31T18:00:00.000Z"
