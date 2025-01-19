@@ -55,6 +55,7 @@ def calculate_time_and_days(data):
     for rank, result in enumerate(results, start=1):
         result['rank'] = rank
 
+    #print(results)
     return results
 
 
