@@ -38,23 +38,23 @@ The **Smart Office Analytics** project processes IoT-generated event data to pro
   - Handles consecutive events appropriately.
 
 ---
-## **Prerequisites**
+- **Prerequisites**
 -Python 3.8 or higher
 -Required library: pytest (for testing)
 
 ---
-## **Installation**
+- **Installation**
 -Clone the repository: git clone https://github.com/your-username/smart-office-analytics.git
 cd smart-office-analytics
 ---
-## **Running the Project**
+- **Running the Project**
 -Run the project using: python3 main.py
 ---
-## **Outputs**
+- **Outputs**
 -User Analytics: output/user_analytics.csv
 -Longest Session Analytics: output/longest_session.csv
 ---
-## **Testing**
+- **Testing**
 -Run all tests using: pytest tests/
 
 ---
