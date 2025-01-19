@@ -45,13 +45,14 @@ def clean_data(data):
     cleaned_data = []
     for row in data:
         try:
-            user_id = row.get("user_id", "").strip()
-            event_type = row.get("event_type", "").strip().upper()
-            event_time = datetime.strptime(row.get("event_time", ""), "%Y-%m-%dT%H:%M:%S.%fZ")
+            user_id = row["user_id"].strip()
+            event_type = row["event_type"].strip().upper()
+            # Normalize event type
+            event_type = "IN" if event_type == "GATE_IN" else "OUT" if event_type == "GATE_OUT" else None
+            event_time = datetime.strptime(row["event_time"], "%Y-%m-%dT%H:%M:%S.%fZ")
 
-            # Validate required fields
-            if not user_id or event_type not in {"GATE_IN", "GATE_OUT"}:
-                raise ValueError("Invalid row data")
+            if not user_id or not event_type or not event_time:
+                continue
 
             cleaned_data.append({
                 "user_id": user_id,
