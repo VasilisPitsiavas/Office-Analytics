@@ -18,66 +18,6 @@ def load_csv(file_path):
             data.append(row)
     return data
 
-'''
-def normalize_event_type(event_type):
-    if event_type is None:
-        return None
-    return event_type.strip().upper()
-
-
-def parse_event_time(event_time):
-    try:
-        return datetime.strptime(event_time, "%Y-%m-%dT%H:%M:%S.%fZ")
-    except ValueError:
-        raise ValueError(f"Invalid timestamp format: {event_time}")
-'''
-
-''' 
-def clean_data(data):
-    """
-    Cleans and processes raw data for both analytics and session calculations.
-
-    Args:
-        data (list): List of dictionaries with raw data.
-
-    Returns:
-        list: Cleaned data as a list of dictionaries.
-    """
-    cleaned_data = []
-    for row in data:
-        try:
-            # Gracefully handle missing keys
-            user_id = row.get("user_id", "").strip()
-            event_type = row.get("event_type", "").strip().upper()
-            event_time_str = row.get("event_time", "")
-
-            # Validate user_id and event_type
-            if not user_id or event_type not in {"GATE_IN", "GATE_OUT"}:
-                raise ValueError("Invalid user_id or event_type")
-
-            # Normalize event type
-            event_type = "IN" if event_type == "GATE_IN" else "OUT"
-
-            # Parse event_time
-            try:
-                event_time = datetime.strptime(event_time_str, "%Y-%m-%dT%H:%M:%S.%fZ")
-            except ValueError:
-                raise ValueError(f"Invalid timestamp format: {event_time_str}")
-
-            # Append valid row to cleaned data
-            cleaned_data.append({
-                "user_id": user_id,
-                "event_type": event_type,
-                "event_time": event_time,
-            })
-
-        except Exception as e:
-            # Log invalid rows for debugging
-            print(f"Skipping invalid row: {row} | Error: {e}")
-
-    return cleaned_data
-
-'''
 
 def clean_data_for_user_analytics(data):
     """
