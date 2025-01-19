@@ -58,7 +58,7 @@ def calculate_time_and_days(data):
     return results
 
 
-''' 
+'''
     def calculate_longest_session(entries: List[Dict[str, str]]) -> List[Dict[str, str]]:
         user_sessions = defaultdict(list)
         
@@ -81,4 +81,66 @@ def calculate_time_and_days(data):
         ]
         return sorted(longest_sessions, key=lambda x: x["session_length"], reverse=True)
     
-    '''
+''' 
+
+
+def calculate_longest_session(entries: List[Dict[str, str]]) -> List[Dict[str, float]]:
+    """
+    Calculate the longest work session for each user, considering the two-hour rule.
+
+    Args:
+        entries (List[Dict[str, str]]): List of dictionaries with keys:
+            - "user_id": User ID (str)
+            - "event_type": Either "IN" or "OUT" (str)
+            - "event_time": Event timestamp (datetime)
+
+    Returns:
+        List[Dict[str, float]]: List of dictionaries with:
+            - "user_id": User ID (str)
+            - "session_length": Longest session duration in hours (float)
+    """
+    user_sessions = defaultdict(list)
+
+    # Group events by user and pair IN/OUT events
+    for entry in entries:
+        user_id = entry["user_id"]
+        event_time = entry["event_time"]
+        event_type = entry["event_type"]
+
+        if event_type == "IN":
+            user_sessions[user_id].append({"start": event_time})
+        elif event_type == "OUT":
+            if user_sessions[user_id] and "start" in user_sessions[user_id][-1] and "end" not in user_sessions[user_id][-1]:
+                user_sessions[user_id][-1]["end"] = event_time
+
+    # Process sessions to respect the two-hour rule
+    longest_sessions = []
+    for user_id, sessions in user_sessions.items():
+        adjusted_sessions = []
+        current_session = None
+
+        for session in sessions:
+            if "start" in session and "end" in session:
+                if current_session and (session["start"] - current_session["end"] <= timedelta(hours=2)):
+                    # Extend the current session
+                    current_session["end"] = session["end"]
+                else:
+                    # Finalize the current session and start a new one
+                    if current_session:
+                        adjusted_sessions.append(current_session)
+                    current_session = {"start": session["start"], "end": session["end"]}
+
+        # Add the last session if it exists
+        if current_session:
+            adjusted_sessions.append(current_session)
+
+        # Calculate the longest session for this user
+        max_duration = max(
+            (s["end"] - s["start"]).total_seconds() / 3600 for s in adjusted_sessions if "end" in s
+        ) if adjusted_sessions else 0
+
+        longest_sessions.append({"user_id": user_id, "session_length": max_duration})
+
+    return sorted(longest_sessions, key=lambda x: x["session_length"], reverse=True)
+
+
