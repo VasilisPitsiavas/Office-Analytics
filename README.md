@@ -44,7 +44,7 @@ The **Smart Office Analytics** project processes IoT-generated event data to pro
 
 ---
 - **Installation**
--Clone the repository: git clone https://github.com/your-username/smart-office-analytics.git
+-Clone the repository: git clone https://github.com/vasilis_pitsiavas/office-analytics.git
 cd smart-office-analytics
 ---
 - **Running the Project**
