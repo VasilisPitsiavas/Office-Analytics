@@ -3,9 +3,6 @@ from collections import defaultdict
 from typing import List, Dict
 
 
-from collections import defaultdict
-from datetime import datetime
-
 def calculate_time_and_days(data):
     """
     Calculate the total time, number of days spent in the office, average time per day, and rank for each user.
@@ -57,32 +54,6 @@ def calculate_time_and_days(data):
 
     #print(results)
     return results
-
-
-'''
-    def calculate_longest_session(entries: List[Dict[str, str]]) -> List[Dict[str, str]]:
-        user_sessions = defaultdict(list)
-        
-        for entry in entries:
-            user_id = entry["user_id"]
-            timestamp = datetime.strptime(entry["timestamp"], "%Y-%m-%d %H:%M:%S")
-            event_type = entry["event_type"]
-            
-            if event_type == "IN":
-                user_sessions[user_id].append({"start": timestamp})
-            elif event_type == "OUT" and user_sessions[user_id]:
-                session = user_sessions[user_id][-1]
-                if "start" in session:
-                    session["end"] = timestamp
-                    session["duration"] = (session["end"] - session["start"]).total_seconds() / 3600
-
-        longest_sessions = [
-            {"user_id": user_id, "session_length": max((s["duration"] for s in sessions if "duration" in s), default=0)}
-            for user_id, sessions in user_sessions.items()
-        ]
-        return sorted(longest_sessions, key=lambda x: x["session_length"], reverse=True)
-    
-''' 
 
 
 def calculate_longest_session(entries: List[Dict[str, str]]) -> List[Dict[str, float]]:
