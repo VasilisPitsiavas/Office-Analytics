@@ -20,9 +20,9 @@
 ---
 
 ## **Project Description**
-The **Smart Office Analytics** project processes IoT-generated event data to provide insights about employee movements. It features:
+The **Smart Office Analytics** project processes data to provide insights about employee movements. It features:
 - **User Analytics**: Calculates time spent, days present, and productivity rankings.
-- **Longest Session Analytics**: Identifies the longest uninterrupted work sessions.
+- **Longest Session Analytics**: Identifies the longest work sessions.
 - **Employee Clustering**: Groups employees into clusters based on their attendance patterns.
 
 ---
