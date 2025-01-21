@@ -1,22 +1,7 @@
 import random
 import math
 import csv
-''' 
-def plot_clusters(clusters):
-    screen = turtle.Screen()
-    screen.setworldcoordinates(0, 0, 100, 100)
-    t = turtle.Turtle()
-    colors = ["red", "blue", "green", "orange"]
 
-    for cluster_id, cluster in enumerate(clusters):
-        t.penup()
-        t.color(colors[cluster_id % len(colors)])
-        for point in cluster:
-            t.goto(point[0] * 10, point[1])  
-            t.dot(10)
-
-    screen.mainloop()
-'''
 
 def euclidean_distance(point1, point2):
     """Calculate Euclidean distance between two points."""
@@ -54,6 +39,12 @@ def k_means_clustering(data, k, max_iterations=100):
     Returns:
         dict: Cluster assignments and centroids.
     """
+    if not data:
+        raise ValueError("Input data is empty. Clustering cannot be performed.")
+    
+    if k > len(data):
+        raise ValueError("Number of clusters (k) cannot exceed the size of the dataset.")
+    
     centroids = initialize_centroids(data, k)
     for _ in range(max_iterations):
         clusters = assign_clusters(data, centroids)
@@ -98,8 +89,6 @@ def employee_clustering(user_analytics, k=3):
                     "user_id": employee["user_id"],
                     "cluster": cluster_id + 1
                 })
-    print("Plotting clusters...")
-    #plot_clusters(clustering_result["clusters"])
 
     return cluster_assignments
 
